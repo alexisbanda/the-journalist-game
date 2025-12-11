@@ -103,11 +103,11 @@ export default function HubView() {
 
 
 
-                <div className="flex gap-16 mt-16 justify-center items-end">
+                <div className="flex flex-col md:flex-row gap-8 md:gap-16 mt-8 md:mt-16 justify-center items-center md:items-end w-full px-4">
                     {/* Phone Hotspot */}
                     <button
                         onClick={() => setView('phone')}
-                        className="group relative w-40 h-72 bg-gradient-to-b from-gray-800 to-black border-4 border-gray-700 rounded-[2rem] hover:border-noir-gold transition-all duration-300 transform hover:-translate-y-2 shadow-2xl flex items-center justify-center"
+                        className="group relative w-32 h-64 md:w-40 md:h-72 bg-gradient-to-b from-gray-800 to-black border-4 border-gray-700 rounded-[2rem] hover:border-noir-gold transition-all duration-300 transform hover:-translate-y-2 shadow-2xl flex items-center justify-center shrink-0 order-2 md:order-1"
                     >
                         {/* Screen Reflection */}
                         <div className="absolute inset-2 bg-gray-900 rounded-[1.5rem] overflow-hidden border border-gray-600">
@@ -127,10 +127,10 @@ export default function HubView() {
                     {/* Computer Hotspot */}
                     <button
                         onClick={() => setView('computer')}
-                        className="group relative w-[32rem] h-[20rem] bg-gray-800 border-b-8 border-r-8 border-gray-900 rounded-lg hover:border-noir-blue transition-all duration-300 transform hover:-translate-y-1 shadow-2xl flex flex-col p-4 gap-2"
+                        className="group relative w-full md:w-[32rem] h-48 md:h-[20rem] bg-gray-800 border-b-8 border-r-8 border-gray-900 rounded-lg hover:border-noir-blue transition-all duration-300 transform hover:-translate-y-1 shadow-2xl flex flex-col p-4 gap-2 order-1 md:order-2"
                     >
-                        {/* Monitor Stand */}
-                        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-32 h-12 bg-gray-900 rounded-b-lg shadow-lg -z-10" />
+                        {/* Monitor Stand - Hidden on mobile to save space/reduce complexity */}
+                        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-32 h-12 bg-gray-900 rounded-b-lg shadow-lg -z-10 hidden md:block" />
 
                         {/* Screen */}
                         <div className="flex-1 bg-black rounded border-4 border-gray-700 relative overflow-hidden group-hover:shadow-[0_0_30px_rgba(59,130,246,0.15)] transition-shadow">
@@ -149,17 +149,19 @@ export default function HubView() {
                         </div>
                     </button>
 
-                    {/* Case Folder (Visual Only for now, represents Active Case) */}
-                    <div className="absolute bottom-10 right-10 w-64 h-48 bg-noir-paper rotate-3 shadow-xl border border-yellow-900/20 p-4 transform transition-transform hover:rotate-0 hover:-translate-y-4 cursor-pointer">
+                    {/* Case Folder (Visual Only, represents Active Case) */}
+                    {/* On mobile, we position it relative or sticky? For now let's make it small and fixed or just part of the flow if needed. 
+                        Let's keep it absolute but check overlap. */}
+                    <div className="absolute top-20 left-4 md:top-auto md:left-auto md:bottom-10 md:right-10 w-48 md:w-64 h-32 md:h-48 bg-noir-paper rotate-3 shadow-xl border border-yellow-900/20 p-4 transform transition-transform hover:rotate-0 hover:-translate-y-4 cursor-pointer z-0 md:z-auto opacity-50 md:opacity-100 hover:opacity-100">
                         <div className="absolute -top-3 left-0 w-24 h-4 bg-noir-paper rounded-t-lg border-t border-l border-r border-yellow-900/20" />
-                        <h3 className="font-mono text-xl text-black font-bold uppercase border-b-2 border-black/50 pb-2 mb-2">
+                        <h3 className="font-mono text-sm md:text-xl text-black font-bold uppercase border-b-2 border-black/50 pb-2 mb-2 truncate">
                             CASO: {activeCase?.templateId.split('_')[1] || 'DESCONOCIDO'}
                         </h3>
-                        <div className="text-xs text-black/70 font-serif leading-relaxed">
+                        <div className="text-[10px] md:text-xs text-black/70 font-serif leading-relaxed">
                             <p>CONFIDENCIAL</p>
                             <p>NO DISTRIBUIR</p>
                         </div>
-                        <div className="absolute bottom-4 right-4 stamp text-red-800 font-bold border-4 border-red-800 rounded px-2 opacity-70 -rotate-12 uppercase text-sm">
+                        <div className="absolute bottom-4 right-4 stamp text-red-800 font-bold border-4 border-red-800 rounded px-2 opacity-70 -rotate-12 uppercase text-xs md:text-sm">
                             ABIERTO
                         </div>
                     </div>

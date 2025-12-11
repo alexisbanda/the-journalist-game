@@ -72,7 +72,7 @@ export default function SearchApp() {
             </AnimatePresence>
 
             {/* Sidebar / Results */}
-            <div className="w-1/3 border-r border-zinc-800 flex flex-col bg-zinc-900/50">
+            <div className={`w-full md:w-1/3 border-r border-zinc-800 flex flex-col bg-zinc-900/50 ${selectedDoc && 'hidden md:flex'}`}>
                 <div className="p-4 border-b border-zinc-800 bg-zinc-900">
                     <div className="relative group">
                         <Search className="absolute left-3 top-2.5 text-zinc-500 group-focus-within:text-cyber-green transition-colors" size={16} />
@@ -111,7 +111,7 @@ export default function SearchApp() {
             </div>
 
             {/* Main Content / Document View */}
-            <div className={`flex-1 overflow-y-auto bg-[#0a0a0a] relative selection:bg-cyber-green selection:text-black relative ${!selectedDoc ? 'flex items-center justify-center' : ''}`} onMouseUp={handleTextMouseUp}>
+            <div className={`flex-1 overflow-y-auto bg-[#0a0a0a] relative selection:bg-cyber-green selection:text-black relative ${!selectedDoc ? 'hidden md:flex items-center justify-center' : 'block'} w-full md:w-auto`} onMouseUp={handleTextMouseUp}>
                 {/* Background Grid for Content Area */}
                 <div className="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
@@ -120,12 +120,20 @@ export default function SearchApp() {
                         key={selectedDoc.id}
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
-                        className="max-w-3xl mx-auto p-8 relative z-10"
+                        className="max-w-3xl mx-auto p-4 md:p-8 relative z-10"
                     >
+                        {/* Mobile Back Button */}
+                        <button
+                            onClick={() => setSelectedDocId(null)}
+                            className="md:hidden mb-4 flex items-center gap-2 text-cyber-green text-xs font-mono uppercase tracking-widest border border-zinc-800 px-3 py-2 rounded bg-zinc-900/50"
+                        >
+                            ← Volver a Búsqueda
+                        </button>
+
                         <div className="mb-6 flex items-end justify-between border-b border-zinc-800 pb-4">
                             <div>
                                 <span className="text-[10px] text-zinc-600 uppercase tracking-[0.2em] block mb-1">Documento Confidencial // ID: {selectedDoc.id}</span>
-                                <h1 className="text-2xl text-white font-bold uppercase tracking-wide text-glow">
+                                <h1 className="text-xl md:text-2xl text-white font-bold uppercase tracking-wide text-glow">
                                     {selectedDoc.title}
                                 </h1>
                             </div>

@@ -19,7 +19,7 @@ export default function ComputerView() {
             transition={{ duration: 0.3 }}
             className="w-full h-full flex items-center justify-center bg-black p-4 perspective-1000 overflow-hidden"
         >
-            <div className="w-full h-full max-w-7xl aspect-video bg-[#09090b] rounded-lg border-[10px] border-zinc-800 shadow-[0_0_50px_rgba(124,58,237,0.1)] overflow-hidden flex flex-col relative">
+            <div className="w-full h-full md:max-w-7xl md:aspect-video bg-[#09090b] rounded-none md:rounded-lg border-0 md:border-[10px] border-zinc-800 shadow-[0_0_50px_rgba(124,58,237,0.1)] overflow-hidden flex flex-col relative">
 
                 {/* SCREEN LAYERS */}
 
@@ -61,16 +61,16 @@ export default function ComputerView() {
                 <div className="flex-1 flex overflow-hidden relative z-10 p-6">
 
                     {/* Desktop Icons Grid */}
-                    <div className="flex flex-col gap-8">
+                    <div className="flex flex-row md:flex-col gap-4 md:gap-8 absolute top-4 left-4 md:static z-20">
                         {/* Database Icon */}
                         <button
                             onClick={() => setOpenApp('search')}
-                            className="group flex flex-col items-center gap-2 w-24 text-center active:scale-95 transition-transform"
+                            className="group flex flex-col items-center gap-2 w-20 md:w-24 text-center active:scale-95 transition-transform"
                         >
-                            <div className={`w-16 h-16 rounded-xl flex items-center justify-center border-2 transition-all duration-300 ${openApp === 'search' ? 'bg-cyber-blue/20 border-cyber-blue shadow-[0_0_20px_rgba(59,130,246,0.3)]' : 'bg-zinc-800/80 border-zinc-600 group-hover:border-white'}`}>
-                                <Search className={`${openApp === 'search' ? 'text-cyber-blue' : 'text-gray-300 group-hover:text-white'}`} size={32} />
+                            <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center border-2 transition-all duration-300 ${openApp === 'search' ? 'bg-cyber-blue/20 border-cyber-blue shadow-[0_0_20px_rgba(59,130,246,0.3)]' : 'bg-zinc-800/80 border-zinc-600 group-hover:border-white'}`}>
+                                <Search className={`${openApp === 'search' ? 'text-cyber-blue' : 'text-gray-300 group-hover:text-white'}`} size={24} />
                             </div>
-                            <span className="text-xs font-mono font-bold text-white bg-black/50 px-2 rounded group-hover:bg-cyber-blue group-hover:text-black transition-colors">
+                            <span className="text-[10px] md:text-xs font-mono font-bold text-white bg-black/50 px-2 rounded group-hover:bg-cyber-blue group-hover:text-black transition-colors break-all">
                                 BASE_DE_DATOS.exe
                             </span>
                         </button>
@@ -78,12 +78,12 @@ export default function ComputerView() {
                         {/* Editor Icon */}
                         <button
                             onClick={() => setOpenApp('editor')}
-                            className="group flex flex-col items-center gap-2 w-24 text-center active:scale-95 transition-transform"
+                            className="group flex flex-col items-center gap-2 w-20 md:w-24 text-center active:scale-95 transition-transform"
                         >
-                            <div className={`w-16 h-16 rounded-xl flex items-center justify-center border-2 transition-all duration-300 ${openApp === 'editor' ? 'bg-cyber-green/20 border-cyber-green shadow-[0_0_20px_rgba(16,185,129,0.3)]' : 'bg-zinc-800/80 border-zinc-600 group-hover:border-white'}`}>
-                                <Edit3 className={`${openApp === 'editor' ? 'text-cyber-green' : 'text-gray-300 group-hover:text-white'}`} size={32} />
+                            <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl flex items-center justify-center border-2 transition-all duration-300 ${openApp === 'editor' ? 'bg-cyber-green/20 border-cyber-green shadow-[0_0_20px_rgba(16,185,129,0.3)]' : 'bg-zinc-800/80 border-zinc-600 group-hover:border-white'}`}>
+                                <Edit3 className={`${openApp === 'editor' ? 'text-cyber-green' : 'text-gray-300 group-hover:text-white'}`} size={24} />
                             </div>
-                            <span className="text-xs font-mono font-bold text-white bg-black/50 px-2 rounded group-hover:bg-cyber-green group-hover:text-black transition-colors">
+                            <span className="text-[10px] md:text-xs font-mono font-bold text-white bg-black/50 px-2 rounded group-hover:bg-cyber-green group-hover:text-black transition-colors break-all">
                                 NOTAS.txt
                             </span>
                         </button>
@@ -92,7 +92,7 @@ export default function ComputerView() {
                     {/* Window Layer */}
                     <AnimatePresence>
                         {openApp && (
-                            <div className="absolute inset-0 z-30 flex items-center justify-center p-12 pointer-events-none">
+                            <div className="absolute inset-0 z-30 flex items-center justify-center p-0 md:p-12 pointer-events-none">
                                 <motion.div
                                     initial={{ scale: 0.9, opacity: 0, y: 20 }}
                                     animate={{ scale: 1, opacity: 1, y: 0 }}

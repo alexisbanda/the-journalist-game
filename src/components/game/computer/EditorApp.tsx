@@ -111,7 +111,7 @@ export default function EditorApp() {
     // Okay, I will pause this file creation to update the Type/Engine first to include `variableOpts`.
 
     return (
-        <div className="p-8 bg-gray-100 h-full text-black font-serif overflow-y-auto">
+        <div className="p-4 md:p-8 bg-gray-100 h-full active:bg-gray-100 text-black font-serif overflow-y-auto">
             <h1 className="text-4xl font-bold mb-8 text-center border-b-4 border-black pb-4">
                 La Crónica Matutina
             </h1>
@@ -154,7 +154,7 @@ export default function EditorApp() {
                 </div>
             )}
 
-            <div className="bg-white p-8 shadow-2xl max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="bg-white p-4 md:p-8 shadow-2xl max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 
                 {/* LEFT COLUMN: CONTROLS */}
                 <div>
