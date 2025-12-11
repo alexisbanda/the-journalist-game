@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Editor
+> **Juego de Investigación Procedural**
 
-## Getting Started
+Bienvenido a **The Editor**, una experiencia narrativa inmersiva donde asumes el papel de un investigador periodístico. Desde tu estación de trabajo digital, deberás resolver casos complejos, gestionar fuentes y descubrir la verdad oculta entre líneas.
 
-First, run the development server:
+## 🕵️‍♂️ Sobre el Juego
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El juego simula un entorno de sistema operativo donde el jugador interactúa con diferentes herramientas para avanzar en la historia. No es un RPG tradicional de movimiento, sino un simulador de interfaz (UI Simulation) centrado en la narrativa y la deducción.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Mecánicas Principales
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 🖥️ El Hub (Centro de Mando)
+Tu punto de partida. Desde aquí tienes acceso a las diferentes "pantallas" o dispositivos que utilizas para tu investigación.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 📱 El Teléfono (The Phone)
+Tu línea directa con el mundo exterior.
+- **Sistema de Chat Realista**: Interactúa con contactos clave (testigos, informantes, editores).
+- **Diálogos Ramificados**: Tus respuestas importan. Elige cuidadosamente tus palabras para ganar confianza o presionar por información.
+- **Gestión de Hilos**: Mantén múltiples conversaciones activas simultáneamente.
 
-## Learn More
+#### 💻 La Computadora (The Computer)
+Tu herramienta de análisis forense y documental.
+- **Sistema de Archivos**: Navega por carpetas y documentos recuperados.
+- **Análisis de Pistas**: Examina textos en busca de inconsistencias o datos ocultos.
+- **Descifrado**: (Próximamente) Herramientas para desbloquear archivos protegidos.
 
-To learn more about Next.js, take a look at the following resources:
+#### 🗂️ Sistema de Casos (Case Logic)
+El corazón del juego.
+- **Recolección de Evidencia**: Marca y guarda fragmentos de texto o imágenes que consideres relevantes.
+- **Triggers Dinámicos**: Ciertas acciones (abrir un archivo específico, encontrar una palabra clave) pueden desbloquear nuevas opciones de diálogo o eventos en tiempo real.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Casos Reales (Ecuador)
+El juego incluye escenarios basados en hechos reales de la historia reciente de Ecuador, adaptados con lógica procedimental (nombres y variables cambian en cada partida):
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1.  **Caso PROGEN (Crisis Energética)**
+    *   **Contexto:** Los misteriosos contratos de emergencia para generadores eléctricos.
+    *   **Misión:** Descubrir si los motores son nuevos o chatarra remanufacturada.
+    *   **Mecánica Clave:** Interroga al **Ex-Asistente Ministerial** para obtener documentos filtrados.
 
-## Deploy on Vercel
+2.  **Caso Sinohydro (Ina Papers)**
+    *   **Contexto:** La trama de corrupción detrás de la hidroeléctrica más grande del país.
+    *   **Misión:** Seguir la ruta del dinero desde cuentas offshore en Panamá hasta compras de lujo en Europa.
+    *   **Mecánica Clave:** Presiona al **Banquero Privado** para obtener registros de transferencias.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3.  **Los 4 de Las Malvinas (Crimen de Estado)**
+    *   **Contexto:** La desaparición de cuatro jóvenes detenidos por fuerzas militares.
+    *   **Misión:** Contrastar el parte militar oficial con un reporte forense oculto.
+    *   **Mecánica Clave:** Gana la confianza del **Soldado Conscripto** para romper el silencio.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4.  **Caso Juliana (Femicidio/Desaparición)**
+    *   **Contexto:** La lucha de una madre por encontrar a su hija, desaparecida tras asistir a una iglesia.
+    *   **Misión:** Enfrentar al **Pastor** sospechoso y descubrir la manipulación religiosa detrás del silencio.
+    *   **Mecánica Clave:** (Caso Tutorial) Introduce las mecánicas de empatía y recolección de evidencia digital.
+
+## 🛠️ Tecnologías y Mecánicas
+Este proyecto utiliza un motor narrativo personalizado sobre Next.js:
+
+- **Sistema de Chat Interactivo**: Ya no es solo leer. Elige tus respuestas para desbloquear pistas o perder fuentes.
+- **Narrativa Procedimental**: Los nombres de empresas, sospechosos y montos varían (e.g. `{CULPABLE}`, `{MONTO}`) haciendo cada investigación única.
+- **Validación Lógica**: El juego entiende si la evidencia que presentas (texto seleccionado) realmente responde a las preguntas del editor, usando coincidencia flexible (Levenshtein).
+
+---
+
+## 🚀 Instalación y Ejecución
+
+Sigue estos pasos para levantar el proyecto en tu entorno local:
+
+1.  **Clonar el repositorio** (si aún no lo tienes):
+    ```bash
+    git clone <url-del-repo>
+    cd game
+    ```
+
+2.  **Instalar dependencias**:
+    ```bash
+    npm install
+    # o si usas yarn/pnpm/bun
+    yarn install / pnpm install / bun install
+    ```
+
+3.  **Iniciar el servidor de desarrollo**:
+    ```bash
+    npm run dev
+    ```
+
+4.  **Jugar**:
+    Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+
+---
+
+## 📂 Estructura del Proyecto
+
+- `src/app`: Rutas y layouts de Next.js.
+- `src/components/game`: Vistas de UI (Phone, Computer, Hub).
+- `src/data/cases.ts`: **Base de datos de casos**. Aquí se definen los templates, variables y guiones de diálogo.
+- `src/lib/gameEngine.ts`: Lógica de generación de casos y sustitución de variables.
+- `src/store/gameStore.ts`: Estado global (Zustand).
+
+---
+
+_Creado con ❤️ por el equipo de desarrollo de The Editor._
