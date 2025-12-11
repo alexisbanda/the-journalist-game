@@ -40,16 +40,23 @@ export default function HubView() {
                             transition={{ delay: idx * 0.1 }}
                             key={template.id}
                             onClick={() => handleStartCase(template)}
-                            className="group relative h-64 bg-noir-paper text-black p-6 shadow-xl transform transition-all duration-300 hover:-translate-y-4 hover:rotate-1 rotate-0 border-t-2 border-white/20"
+                            className={`group relative h-64 bg-noir-paper text-black p-6 shadow-xl transform transition-all duration-300 hover:-translate-y-4 hover:rotate-1 rotate-0 border-t-2 ${template.id === 'case_juliana_01' ? 'scale-105 border-yellow-400 ring-4 ring-yellow-400/20 z-20' : 'border-white/20'}`}
                             style={{ clipPath: 'polygon(0 0, 40% 0, 45% 10%, 100% 10%, 100% 100%, 0 100%)' }} // Folder tab shape
                         >
                             {/* Folder Tab Label */}
                             <div className="absolute top-2 left-4 text-xs font-bold uppercase opacity-50">CONFIDENCIAL</div>
 
+                            {/* Tutorial Badge */}
+                            {template.id === 'case_juliana_01' && (
+                                <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-20 shadow-lg animate-pulse">
+                                    Tutorial / Iniciar Aquí
+                                </div>
+                            )}
+
                             {/* Case Content */}
-                            <div className="mt-8 space-y-4 border-l-2 border-red-900/20 pl-4">
+                            <div className={`mt-8 space-y-4 border-l-2 pl-4 ${template.id === 'case_juliana_01' ? 'border-yellow-400' : 'border-red-900/20'}`}>
                                 <span className="block text-xs font-mono text-gray-600 mb-1">EXPEDIENTE #00{idx + 1}</span>
-                                <h3 className="text-2xl font-bold font-serif text-black group-hover:text-red-900 transition-colors uppercase leading-tight">
+                                <h3 className={`text-2xl font-bold font-serif group-hover:text-red-900 transition-colors uppercase leading-tight ${template.id === 'case_juliana_01' ? 'text-black drop-shadow-md' : 'text-black'}`}>
                                     {template.id.split('_').slice(1).join(' ')}
                                 </h3>
                                 <div className="flex items-center gap-2">

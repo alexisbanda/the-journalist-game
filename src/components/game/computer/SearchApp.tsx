@@ -9,6 +9,7 @@ export default function SearchApp() {
     const activeCase = useGameStore((state) => state.activeCase);
     const collectEvidence = useGameStore((state) => state.collectEvidence);
     const checkTriggers = useGameStore((state) => state.checkTriggers);
+    const tutorialFlags = useGameStore((state) => state.tutorialFlags);
 
     const [query, setQuery] = useState('');
     const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
@@ -155,6 +156,26 @@ export default function SearchApp() {
                         <div className="mt-12 pt-4 border-t border-zinc-800 text-[10px] text-zinc-700 font-mono text-center">
                             *** FIN DEL ARCHIVO ***
                         </div>
+
+                        {/* Tutorial Hint overlay */}
+                        {!tutorialFlags.hasSeenEvidenceTutorial && (
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="fixed top-32 right-8 w-64 bg-yellow-400 text-black p-4 z-50 shadow-[0_0_20px_rgba(250,204,21,0.4)] border-2 border-black rotate-1"
+                            >
+                                <div className="absolute -top-2 -left-2 w-4 h-4 bg-black" />
+                                <h4 className="font-black font-mono uppercase text-sm mb-2 flex items-center gap-2">
+                                    <span className="animate-pulse">●</span> Tutorial
+                                </h4>
+                                <p className="text-xs font-serif leading-tight">
+                                    Selecciona <span className="bg-black text-white px-1">fragmentos de texto</span> con tu mouse para recopilar evidencia.
+                                </p>
+                                <p className="text-[10px] mt-2 opacity-70 border-t border-black/20 pt-1">
+                                    Busca nombres, fechas o lugares clave.
+                                </p>
+                            </motion.div>
+                        )}
                     </motion.div>
                 ) : (
                     <div className="text-center space-y-4 opacity-50">

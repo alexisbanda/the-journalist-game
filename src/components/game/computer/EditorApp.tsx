@@ -162,6 +162,16 @@ export default function EditorApp() {
                         Configuración Editorial
                     </h2>
 
+                    {(!activeCase.collectedEvidence || activeCase.collectedEvidence.length === 0) && (
+                        <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-6">
+                            <p className="font-bold text-yellow-700 text-sm uppercase">Falta Información</p>
+                            <p className="text-xs text-yellow-800 mt-1">
+                                No puedes publicar sin fuentes. <br />
+                                Ve a la aplicación <strong>BASE_DE_DATOS</strong> o <strong>TELÉFONO</strong> y busca evidencia relevante.
+                            </p>
+                        </div>
+                    )}
+
                     <div className="space-y-6">
                         {questions.map((qKey) => (
                             <div key={qKey} className="flex flex-col group">

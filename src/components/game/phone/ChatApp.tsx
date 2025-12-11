@@ -2,13 +2,15 @@
 
 import { useGameStore } from '@/store/gameStore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Smartphone, ArrowLeft, AlertTriangle } from 'lucide-react';
+import { User, Smartphone, ArrowLeft, AlertTriangle, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 export default function ChatApp() {
     const activeCase = useGameStore((state) => state.activeCase);
     const chooseOption = useGameStore((state) => state.chooseOption);
     const collectEvidence = useGameStore((state) => state.collectEvidence);
+    const tutorialFlags = useGameStore((state) => state.tutorialFlags);
+    const setTutorialFlag = useGameStore((state) => state.setTutorialFlag);
 
     // State for navigation
     const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
@@ -96,7 +98,6 @@ export default function ChatApp() {
         );
     }
 
-    // DETAIL VIEW (Existing Logic wrapped)
     // DETAIL VIEW
     return (
         <div className="flex flex-col h-full bg-[#050505] relative font-sans" onMouseUp={handleTextMouseUp}>
@@ -142,6 +143,33 @@ export default function ChatApp() {
                     <span className="text-[10px] text-green-500 uppercase tracking-wider font-bold">Conexión Cifrada</span>
                 </div>
             </div>
+
+            {/* Tutorial Hint overlay */}
+            {!tutorialFlags.hasSeenEvidenceTutorial && (
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute top-20 left-4 right-4 bg-yellow-400 text-black p-3 z-40 shadow-xl border-2 border-black rounded-sm"
+                >
+                    <div className="flex justify-between items-start mb-1">
+                        <div className="flex items-center gap-2">
+                            <span className="animate-pulse font-bold">⚠️ TUTORIAL</span>
+                        </div>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setTutorialFlag('hasSeenEvidenceTutorial');
+                            }}
+                            className="p-1 hover:bg-black/10 rounded"
+                        >
+                            <X size={14} />
+                        </button>
+                    </div>
+                    <p className="text-[11px] font-sans leading-tight pr-4">
+                        Puedes seleccionar <strong>partes del chat</strong> con el mouse para guardarlas como evidencia.
+                    </p>
+                </motion.div>
+            )}
 
             {/* Messages Area */}
             <div className="flex-1 overflow-y-auto p-4 space-y-6 selection:bg-cyber-green selection:text-black scroll-smooth bg-gradient-to-b from-black to-[#0a0a0a]">

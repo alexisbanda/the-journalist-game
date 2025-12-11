@@ -2,17 +2,25 @@ import { create } from 'zustand';
 import { ActiveCaseState, InventoryItem, ViewState } from '@/types/game';
 import { replaceVariables } from '@/lib/gameEngine';
 
+
 interface GameState {
     currentView: ViewState;
     activeCase: ActiveCaseState | null;
     inventory: InventoryItem[];
     gameTime: Date;
 
+    // Tutorial Flags
+    tutorialFlags: {
+        hasSeenEvidenceTutorial: boolean;
+        hasSeenEditorTutorial: boolean;
+    };
+
     // Actions
     setView: (view: ViewState) => void;
     setActiveCase: (caseState: ActiveCaseState) => void;
     clearActiveCase: () => void;
     addToInventory: (item: InventoryItem) => void;
+    setTutorialFlag: (flag: 'hasSeenEvidenceTutorial' | 'hasSeenEditorTutorial') => void;
 
     // Gameplay Actions
     addMessageToThread: (threadId: string, message: any) => void;
@@ -30,11 +38,19 @@ export const useGameStore = create<GameState>((set) => ({
     inventory: [],
     gameTime: new Date(),
 
+    tutorialFlags: {
+        hasSeenEvidenceTutorial: false,
+        hasSeenEditorTutorial: false,
+    },
+
     setView: (view) => set({ currentView: view }),
     setActiveCase: (caseState) => set({ activeCase: caseState }),
     clearActiveCase: () => set({ activeCase: null }),
     addToInventory: (item) => set((state) => ({
         inventory: [...state.inventory, item]
+    })),
+    setTutorialFlag: (flag) => set((state) => ({
+        tutorialFlags: { ...state.tutorialFlags, [flag]: true }
     })),
 
     chooseOption: (threadId, option) => set((state) => {
@@ -125,7 +141,8 @@ export const useGameStore = create<GameState>((set) => ({
             activeCase: {
                 ...state.activeCase,
                 collectedEvidence: [...current, text]
-            }
+            },
+            tutorialFlags: { ...state.tutorialFlags, hasSeenEvidenceTutorial: true } // Auto-mark as seen if they successfully collected
         };
     }),
 
