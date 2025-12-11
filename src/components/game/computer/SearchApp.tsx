@@ -1,7 +1,7 @@
 'use client';
 
 import { useGameStore } from '@/store/gameStore';
-import { Search, FileText } from 'lucide-react';
+import { Search, FileText, X } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,6 +10,7 @@ export default function SearchApp() {
     const collectEvidence = useGameStore((state) => state.collectEvidence);
     const checkTriggers = useGameStore((state) => state.checkTriggers);
     const tutorialFlags = useGameStore((state) => state.tutorialFlags);
+    const setTutorialFlag = useGameStore((state) => state.setTutorialFlag);
 
     const [query, setQuery] = useState('');
     const [selectedDocId, setSelectedDocId] = useState<string | null>(null);
@@ -191,12 +192,22 @@ export default function SearchApp() {
                             <motion.div
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="fixed top-32 right-8 w-64 bg-yellow-400 text-black p-4 z-50 shadow-[0_0_20px_rgba(250,204,21,0.4)] border-2 border-black rotate-1"
+                                className="fixed top-32 right-8 w-64 bg-yellow-400 text-black p-3 z-50 shadow-[0_0_20px_rgba(250,204,21,0.4)] border-2 border-black rotate-1"
                             >
                                 <div className="absolute -top-2 -left-2 w-4 h-4 bg-black" />
-                                <h4 className="font-black font-mono uppercase text-sm mb-2 flex items-center gap-2">
-                                    <span className="animate-pulse">●</span> Tutorial
-                                </h4>
+
+                                <div className="flex justify-between items-start mb-2">
+                                    <h4 className="font-black font-mono uppercase text-sm flex items-center gap-2">
+                                        <span className="animate-pulse">●</span> Tutorial
+                                    </h4>
+                                    <button
+                                        onClick={() => setTutorialFlag('hasSeenEvidenceTutorial')}
+                                        className="hover:bg-black hover:text-white rounded p-0.5 transition-colors"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                </div>
+
                                 <p className="text-xs font-serif leading-tight">
                                     Selecciona <span className="bg-black text-white px-1">fragmentos de texto</span> con tu mouse para recopilar evidencia.
                                 </p>

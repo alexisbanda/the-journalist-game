@@ -23,14 +23,14 @@ export const CASES: CaseTemplate[] = [
         documents_templates: [
             {
                 id: "doc_contrato",
-                title_template: "Contrato de Emergencia - {EMPRESA}",
-                content_template: "CONFIDENCIAL\n\nSe autoriza el pago de un anticipo del 70% ({MONTO}) a {EMPRESA} sin garantías de ejecución.\nFirma autorizante: {CULPABLE}.",
+                title_template: "CONTRATO PM-2023-001: Adquisición de {EQUIPO}",
+                content_template: "REPÚBLICA DEL ECUADOR - MINISTERIO DE ENERGÍA\nCONTRATO ADMINISTRATIVO DE EMERGENCIA No. MEM-2023-099\n\nCLAÚSULA PRIMERA: OBJETO.\nLa empresa contratista {EMPRESA} se compromete a la entrega inmediata de 40 unidades de {EQUIPO} para mitigar la crisis energética declarada en Decreto Ejecutivo 211.\n\nCLAÚSULA CUARTA: FORMA DE PAGO.\nAmparados en el estado de excepción, {INSTITUCION} autoriza el pago de un anticipo del 70% ({MONTO}) a la cuenta designada por el proveedor, sin exigencia de garantías de fiel cumplimiento habituales, dada la urgencia nacional.\n\nCLAÚSULA SEXTA: FIRMAS.\nAutoriza: {CULPABLE}.\n(Sello de CONFIDENCIALIDAD - Seguridad Nacional)",
                 tags_template: ["Finanzas", "{CULPABLE}", "Corrupción"]
             },
             {
                 id: "doc_tecnico",
-                title_template: "Informe Técnico de Arribo",
-                content_template: "ALERTA: Los {EQUIPO} recibidos no son nuevos. Las placas de fabricación datan de 2015 y son {FALLA}. No pueden sincronizarse con la red nacional.",
+                title_template: "INFORME TÉCNICO PRELIMINAR DE ARRIBO",
+                content_template: "MEMORANDO TÉCNICO #TEC-2023-88\nPARA: Gerencia General\nASUNTO: Novedades en recepción de carga\n\nTras la inspección física en aduanas del lote proveniente de {EMPRESA}, se reportan las siguientes inconsistencias graves:\n\n1. Los equipos no corresponden al año de fabricación 2023 contratado. Las placas de serie indican fabricación en 2015.\n2. Se detectan signos de corrosión y re-pintado en los bloques principales. Son {FALLA}.\n3. La sincronización con el Sistema Nacional Interconectado es imposible sin adaptadores que no fueron suministrados.\n\nCONCLUSIÓN: Se recomienda no firmar el acta de recepción definitiva.",
                 tags_template: ["Técnico", "Fraude", "{EQUIPO}"]
             }
         ],
@@ -109,14 +109,14 @@ export const CASES: CaseTemplate[] = [
         documents_templates: [
             {
                 id: "doc_bank",
-                title_template: "Transferencia Internacional - Panamá",
-                content_template: "Origen: {EMPRESA}.\nDestino: {OFFSHORE} (Cuenta cifrada).\nConcepto: 'Consultorías Varias'.\nMonto: $100,000 USD.",
+                title_template: "SWIFT MESSAGE REPORT - GLOBAL BANK",
+                content_template: "TRANSACTION ID: SW-99283711\nDATE: 12/Oct/2018\nFROM: {EMPRESA} (Beijing Branch)\nTO: {OFFSHORE} (Panama - Balboa Bank)\n\nAMOUNT: USD 100,000.00\nREF: 'Consultancy Services - Hydro Studies'\n\nNOTE: This transaction was flagged by compliance but manually approved per instructions from High Net Worth Clients division.",
                 tags_template: ["Banco", "{OFFSHORE}", "Lavado"]
             },
             {
                 id: "doc_factura",
-                title_template: "Factura de Compra - Europa",
-                content_template: "Cliente: {OFFSHORE}\nDetalle: Compra de {OBJETO} con entrega en domicilio de la hija de {PERSONAJE}.",
+                title_template: "INVOICE #EU-9912 - LUXURY GOODS",
+                content_template: "VENDOR: European Antiques & Design S.L. (Madrid, España)\nBILL TO: {OFFSHORE}\nSHIP TO: Cumbayá, Ecuador (Residence of {PERSONAJE})\n\nITEMS:\n1. Antique 18th Century Mirror ..... EUR 12,000\n2. {OBJETO} ........................ EUR 45,000\n3. Shipping & Handling .............. EUR  1,500\n\nTOTAL: EUR 58,500\nPAYMENT STATUS: PAID (Wire Transfer from {OFFSHORE})",
                 tags_template: ["Compras", "{PERSONAJE}", "Lujos"]
             }
         ],
@@ -195,14 +195,14 @@ export const CASES: CaseTemplate[] = [
         documents_templates: [
             {
                 id: "doc_parte",
-                title_template: "Parte Militar Oficial",
-                content_template: "Operativo en el sector Malvinas finalizado sin novedades.\nLos detenidos fueron liberados tras verificación de antecedentes.\nFirma: {OFICIAL}.",
+                title_template: "PARTE DE OPERACIONES No. 44-LIMA",
+                content_template: "COMANDO CONJUNTO - FUERZA DE TAREA LITORAL\nFECHA: 12 Noviembre\nHORA: 04:00 AM\n\nREPORTE DE NOVEDADES:\nEl equipo táctico de {FUERZA} ingresó al sector Malvinas Norte y Sur. Se procedió al control de armas y revisión de identidades.\n\nRESULTADOS:\n- 0 armas decomisadas.\n- Se retuvo momentáneamente a ciudadanos para verificación.\n- Los detenidos fueron liberados tras no encontrar antecedentes penales.\n\nEl operativo finalizó sin novedad. El personal retorna a base sin consignas.\nFIRMA: {OFICIAL} (Comandante a Cargo).",
                 tags_template: ["Militar", "Oficial", "Mentira"]
             },
             {
                 id: "doc_forense",
-                title_template: "Reporte de Autopsia Reservado",
-                content_template: "Cuerpos hallados en {LUGAR}.\nSignos de tortura severa y quemaduras post-mortem.\nNo coinciden con un ajuste de cuentas de bandas, hay indicios de botas militares.",
+                title_template: "PROTOCOLO DE AUTOPSIA - RESERVADO",
+                content_template: "DEPARTAMENTO MEDICO LEGAL - CIENCIAS FORENSES\nCADÁVER: No Identificado (NN-01)\nLUGAR DE HALLAZGO: {LUGAR}\n\nEXAMEN EXTERNO:\nEl cuerpo presenta múltiples hematomas en tórax y abdomen. Se observan quemaduras circulares compatibles con electricidad o cigarrillos en extremidades.\n\nEXAMEN INTERNO:\nLaceración hepática y hemorragia interna masiva.\n\nCONCLUSIÓN:\nLa causa de muerte es traumática violenta. Las marcas en muñecas sugieren contención mecánica. No coinciden con ahogamiento o accidente. Hay indicios de botas militares en la zona perilesional.",
                 tags_template: ["Forense", "{LUGAR}", "Tortura"]
             }
         ],
@@ -285,20 +285,20 @@ export const CASES: CaseTemplate[] = [
         documents_templates: [
             {
                 id: "doc_expediente",
-                title_template: "Expediente Fiscal #2012-099",
-                content_template: "DENUNCIA DE DESAPARICIÓN\nFecha del Reporte: 8 de Julio 2012.\nFecha de Desaparición: {FECHA}.\nLugar señalado: {LUGAR}.\nInconsistencias: El {SOSPECHOSO} afirmó no haberla visto, pero registros telefónicos lo ubican en la zona.",
+                title_template: "FISCALÍA GENERAL - EXPEDIENTE 2012-099",
+                content_template: "UNIDAD DE DESAPARECIDOS\nDENUNCIANTE: Elizabeth Rodríguez (Madre)\nDESAPARECIDA: Juliana Campoverde\n\nHECHOS:\nEl día {FECHA}, la joven Juliana fue vista por última vez en la {LUGAR}. Según versiones, iba a encontrarse con compañeros de la iglesia.\n\nDILIGENCIAS:\nSe ha tomado versión al {SOSPECHOSO}, quien lidera la organización {ORGANIZACION}. Él afirma que Juliana abandonó el culto voluntariamente. Sin embargo, la triangulación de celdas celulares lo ubica en el mismo sector a la hora de la desaparición.",
                 tags_template: ["Expediente", "{SOSPECHOSO}", "{LUGAR}"]
             },
             {
                 id: "doc_mensajes",
                 title_template: "Log Mensajes Facebook (Recuperado)",
-                content_template: "Usuario 'Jonathan': 'Borra todo. Crea un perfil nuevo con otro nombre. Dios te está probando'.\nUsuario 'Juliana': 'Tengo miedo, pastor. No quiero mentirle a mi mamá'.\n(Fecha del log: Semanas antes de la desaparición).",
+                content_template: "EVIDENCIA DIGITAL #ED-22\nPLATAFORMA: Facebook Messenger\nFECHA RECUPERACIÓN: 2012\n\n[Usuario 'Jonathan']: 'Borra todo. Crea un perfil nuevo con otro nombre. Dios te está probando'.\n[Usuario 'Juliana']: 'Tengo miedo, pastor. No quiero mentirle a mi mamá'.\n\n(Fecha del log: Semanas antes de la desaparición).",
                 tags_template: ["Facebook", "Cibercrimen", "{SOSPECHOSO}"]
             },
             {
                 id: "doc_iglesia",
                 title_template: "Boletín Iglesia 'Luz del Mundo'",
-                content_template: "El {SOSPECHOSO} invita a los jóvenes a un retiro espiritual secreto. 'Dejad todo y seguidme'.\nSe requiere discreción absoluta.",
+                content_template: "IGLESIA CRISTIANA {ORGANIZACION}\nBOLETÍN SEMANAL DE ACTIVIDADES\n\nMENSAJE DEL PASTOR:\nEl {SOSPECHOSO} invita a los jóvenes a un retiro espiritual secreto. 'Dejad todo y seguidme'.\n\nNOTA: Se requiere discreción absoluta. No informar a padres de familia no conversos.",
                 tags_template: ["Iglesia", "Secta", "Jóvenes"]
             }
         ],
