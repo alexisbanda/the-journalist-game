@@ -12,11 +12,37 @@ export default function ChatApp() {
     const tutorialFlags = useGameStore((state) => state.tutorialFlags);
     const setTutorialFlag = useGameStore((state) => state.setTutorialFlag);
 
+    const gameMode = useGameStore((state) => state.gameMode);
+
     // State for navigation
     const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
     const [selection, setSelection] = useState<string | null>(null);
 
     const activeThread = activeCase?.chats.find(c => c.id === selectedThreadId);
+
+    // Helper: Highlight logic
+    const renderContentWithHighlights = (text: string) => {
+        if (gameMode !== 'novice' || !activeCase?.variables) return text;
+
+        const valuesToHighlight = Object.values(activeCase.variables).filter(v => v.length > 3);
+        if (valuesToHighlight.length === 0) return text;
+
+        const escapeRegExp = (string: string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pattern = new RegExp(`(${valuesToHighlight.map(escapeRegExp).join('|')})`, 'gi');
+
+        const parts = text.split(pattern);
+
+        return parts.map((part, i) => {
+            if (valuesToHighlight.some(v => v.toLowerCase() === part.toLowerCase())) {
+                return (
+                    <span key={i} className="bg-yellow-900/40 text-yellow-200 font-bold px-0.5 rounded border-b-2 border-yellow-500/50">
+                        {part}
+                    </span>
+                );
+            }
+            return part;
+        });
+    };
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -191,13 +217,17 @@ export default function ChatApp() {
                         <div
                             className={`max-w-[85%] relative group ${msg.sender === 'player' ? 'items-end' : 'items-start'}`}
                         >
+
+
                             <div
                                 className={`p-3 text-sm shadow-sm relative z-10 ${msg.sender === 'player'
                                     ? 'bg-cyber-blue text-white rounded-2xl rounded-tr-sm'
                                     : 'bg-zinc-800 text-gray-200 rounded-2xl rounded-tl-sm border border-zinc-700'
                                     }`}
                             >
-                                <p className="leading-relaxed">{msg.content}</p>
+                                <p className="leading-relaxed">
+                                    {renderContentWithHighlights(msg.content)}
+                                </p>
                             </div>
                             <div className={`text-[10px] text-zinc-600 mt-1 flex gap-1 ${msg.sender === 'player' ? 'justify-end' : 'justify-start'}`}>
                                 <span>{msg.timestamp}</span>

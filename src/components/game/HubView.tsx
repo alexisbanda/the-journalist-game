@@ -13,6 +13,8 @@ export default function HubView() {
     const activeCase = useGameStore((state) => state.activeCase);
     const setActiveCase = useGameStore((state) => state.setActiveCase);
     const clearActiveCase = useGameStore((state) => state.clearActiveCase);
+    const gameMode = useGameStore((state) => state.gameMode);
+    const setGameMode = useGameStore((state) => state.setGameMode);
 
     const handleStartCase = (template: any) => {
         setActiveCase(generateCase(template));
@@ -30,6 +32,28 @@ export default function HubView() {
                     <p className="text-xl text-noir-gold font-serif italic tracking-wider opacity-80">
                         "La verdad está en los archivos eliminados."
                     </p>
+
+                    {/* Mode Selector */}
+                    <div className="flex justify-center gap-4 mt-6">
+                        <button
+                            onClick={() => setGameMode('novice')}
+                            className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-all ${gameMode === 'novice'
+                                    ? 'bg-yellow-500 text-black border-yellow-500 font-bold shadow-[0_0_15px_rgba(234,179,8,0.5)]'
+                                    : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
+                                }`}
+                        >
+                            Periodista Novato
+                        </button>
+                        <button
+                            onClick={() => setGameMode('expert')}
+                            className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-all ${gameMode === 'expert'
+                                    ? 'bg-red-900 text-white border-red-800 font-bold shadow-[0_0_15px_rgba(127,29,29,0.5)]'
+                                    : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
+                                }`}
+                        >
+                            Periodista Experto
+                        </button>
+                    </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl z-10">

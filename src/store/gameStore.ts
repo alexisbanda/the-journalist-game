@@ -8,6 +8,7 @@ interface GameState {
     activeCase: ActiveCaseState | null;
     inventory: InventoryItem[];
     gameTime: Date;
+    gameMode: 'novice' | 'expert';
 
     // Tutorial Flags
     tutorialFlags: {
@@ -21,6 +22,7 @@ interface GameState {
     clearActiveCase: () => void;
     addToInventory: (item: InventoryItem) => void;
     setTutorialFlag: (flag: 'hasSeenEvidenceTutorial' | 'hasSeenEditorTutorial') => void;
+    setGameMode: (mode: 'novice' | 'expert') => void;
 
     // Gameplay Actions
     addMessageToThread: (threadId: string, message: any) => void;
@@ -37,6 +39,7 @@ export const useGameStore = create<GameState>((set) => ({
     activeCase: null,
     inventory: [],
     gameTime: new Date(),
+    gameMode: 'novice', // Default to Novice
 
     tutorialFlags: {
         hasSeenEvidenceTutorial: false,
@@ -52,6 +55,7 @@ export const useGameStore = create<GameState>((set) => ({
     setTutorialFlag: (flag) => set((state) => ({
         tutorialFlags: { ...state.tutorialFlags, [flag]: true }
     })),
+    setGameMode: (mode) => set({ gameMode: mode }),
 
     chooseOption: (threadId, option) => set((state) => {
         if (!state.activeCase) return state;

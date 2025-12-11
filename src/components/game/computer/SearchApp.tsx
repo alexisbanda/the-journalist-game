@@ -50,6 +50,33 @@ export default function SearchApp() {
     }) || [];
 
     const selectedDoc = activeCase?.documents.find(d => d.id === selectedDocId);
+    const gameMode = useGameStore((state) => state.gameMode);
+
+    // Helper: Highlight logic
+    const renderContentWithHighlights = (text: string) => {
+        if (gameMode !== 'novice' || !activeCase?.variables) return text;
+
+        // Create a regex from all variable values
+        const valuesToHighlight = Object.values(activeCase.variables).filter(v => v.length > 3); // Avoid short words
+        if (valuesToHighlight.length === 0) return text;
+
+        // Escape regex special chars
+        const escapeRegExp = (string: string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const pattern = new RegExp(`(${valuesToHighlight.map(escapeRegExp).join('|')})`, 'gi');
+
+        const parts = text.split(pattern);
+
+        return parts.map((part, i) => {
+            if (valuesToHighlight.some(v => v.toLowerCase() === part.toLowerCase())) {
+                return (
+                    <span key={i} className="bg-yellow-900/40 text-yellow-200 font-bold px-0.5 rounded border-b-2 border-yellow-500/50" title="Pista Clave">
+                        {part}
+                    </span>
+                );
+            }
+            return part;
+        });
+    };
 
     return (
         <div className="flex h-full bg-zinc-950 text-gray-300 font-mono relative">
@@ -147,9 +174,11 @@ export default function SearchApp() {
                             </div>
                         </div>
 
+
+
                         <div className="prose prose-invert prose-p:font-mono prose-p:text-sm prose-p:text-gray-400 prose-p:leading-loose">
                             <p className="whitespace-pre-wrap">
-                                {selectedDoc.content}
+                                {renderContentWithHighlights(selectedDoc.content)}
                             </p>
                         </div>
 

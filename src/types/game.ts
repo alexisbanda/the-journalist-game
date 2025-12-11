@@ -1,4 +1,5 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
+export type GameMode = 'novice' | 'expert';
 
 export interface GameVariables {
     [key: string]: string[];
