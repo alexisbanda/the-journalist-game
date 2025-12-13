@@ -1,101 +1,103 @@
 # The Editor
-> **Juego de Investigación Procedural**
+> **"La verdad está en los archivos eliminados."**
 
-Bienvenido a **The Editor**, una experiencia narrativa inmersiva donde asumes el papel de un investigador periodístico. Desde tu estación de trabajo digital, deberás resolver casos complejos, gestionar fuentes y descubrir la verdad oculta entre líneas.
+Bienvenido a **The Editor**, un simulador de periodismo de investigación con estética *noir* y ciberpunk. Asume el papel de un editor en una redacción asediada, donde tu única arma es la información y tu única defensa es la precisión.
 
-## 🕵️‍♂️ Sobre el Juego
+![Game Banner](public/assets/banner_placeholder.png)
 
-El juego simula un entorno de sistema operativo donde el jugador interactúa con diferentes herramientas para avanzar en la historia. No es un RPG tradicional de movimiento, sino un simulador de interfaz (UI Simulation) centrado en la narrativa y la deducción.
+## 📖 Manual del Investigador
 
-### Mecánicas Principales
+### El Objetivo
+Tu misión es simple: **Encontrar la verdad y publicarla antes del cierre**. 
+Navega por una interfaz de sistema operativo simulado para recopilar evidencia, interrogar fuentes y redactar la noticia de portada. Pero ten cuidado: la precisión lo es todo. Publicar rumores te costará tu reputación.
 
-#### 🖥️ El Hub (Centro de Mando)
-Tu punto de partida. Desde aquí tienes acceso a las diferentes "pantallas" o dispositivos que utilizas para tu investigación.
+### Tu Escritorio (The Hub)
+El centro de mando de tu operación.
+- **Credencial de Prensa**: En la esquina superior izquierda verás tu progreso. Comienzas como *Pasante* y ganas experiencia (Reputación) resolviendo casos.
+- **Selección de Casos**: Los expedientes disponibles aparecen como carpetas en tu escritorio. Debes resolverlos en orden para desbloquear investigaciones de mayor perfil.
+- **Nivel de Dificultad**: Puedes elegir entre modo *Novato* (guías activadas) y *Experto* (sin ayudas).
+
+### Herramientas de Trabajo
 
 #### 📱 El Teléfono (The Phone)
-Tu línea directa con el mundo exterior.
-- **Sistema de Chat Realista**: Interactúa con contactos clave (testigos, informantes, editores).
-- **Diálogos Ramificados**: Tus respuestas importan. Elige cuidadosamente tus palabras para ganar confianza o presionar por información.
-- **Gestión de Hilos**: Mantén múltiples conversaciones activas simultáneamente.
+Tu conexión con las fuentes humanas.
+- **Chats Interactivos**: Habla con testigos, informantes y oficiales.
+- **Gestión de Relaciones**: Tus respuestas afectan la disposición de tus contactos. Sé agresivo y se cerrarán; sé demasiado amable y te mentirán.
+- **Notificaciones**: Mantente atento a nuevos mensajes que pueden cambiar el curso de la investigación.
 
 #### 💻 La Computadora (The Computer)
-Tu herramienta de análisis forense y documental.
-- **Sistema de Archivos**: Navega por carpetas y documentos recuperados.
-- **Análisis de Pistas**: Examina textos en busca de inconsistencias o datos ocultos.
-- **Descifrado**: (Próximamente) Herramientas para desbloquear archivos protegidos.
+El cerebro de la operación.
+- **Base de Datos (SearchApp)**: Busca antecedentes, contratos y registros financieros.
+- **Editor de Noticias (EditorApp)**: Aquí se ensambla la historia.
+    - **Drafting**: Selecciona la evidencia recolectada para responder las preguntas clave (Quién, Qué, Dónde).
+    - **Verificación**: Antes de publicar, el sistema evaluará la veracidad de tus fuentes.
+    - **Publicación**: Envía la noticia a imprenta. Tu precisión determinará la calidad del reportaje (desde *Fake News* hasta *Periodismo de Excelencia*).
 
-#### 🗂️ Sistema de Casos (Case Logic)
-El corazón del juego.
-- **Recolección de Evidencia**: Marca y guarda fragmentos de texto o imágenes que consideres relevantes.
-- **Triggers Dinámicos**: Ciertas acciones (abrir un archivo específico, encontrar una palabra clave) pueden desbloquear nuevas opciones de diálogo o eventos en tiempo real.
-
-## 📁 Casos Reales (Ecuador)
-El juego incluye escenarios basados en hechos reales de la historia reciente de Ecuador, adaptados con lógica procedimental (nombres y variables cambian en cada partida):
-
-1.  **Caso PROGEN (Crisis Energética)**
-    *   **Contexto:** Los misteriosos contratos de emergencia para generadores eléctricos.
-    *   **Misión:** Descubrir si los motores son nuevos o chatarra remanufacturada.
-    *   **Mecánica Clave:** Interroga al **Ex-Asistente Ministerial** para obtener documentos filtrados.
-
-2.  **Caso Sinohydro (Ina Papers)**
-    *   **Contexto:** La trama de corrupción detrás de la hidroeléctrica más grande del país.
-    *   **Misión:** Seguir la ruta del dinero desde cuentas offshore en Panamá hasta compras de lujo en Europa.
-    *   **Mecánica Clave:** Presiona al **Banquero Privado** para obtener registros de transferencias.
-
-3.  **Los 4 de Las Malvinas (Crimen de Estado)**
-    *   **Contexto:** La desaparición de cuatro jóvenes detenidos por fuerzas militares.
-    *   **Misión:** Contrastar el parte militar oficial con un reporte forense oculto.
-    *   **Mecánica Clave:** Gana la confianza del **Soldado Conscripto** para romper el silencio.
-
-4.  **Caso Juliana (Femicidio/Desaparición)**
-    *   **Contexto:** La lucha de una madre por encontrar a su hija, desaparecida tras asistir a una iglesia.
-    *   **Misión:** Enfrentar al **Pastor** sospechoso y descubrir la manipulación religiosa detrás del silencio.
-    *   **Mecánica Clave:** (Caso Tutorial) Introduce las mecánicas de empatía y recolección de evidencia digital.
-
-## 🛠️ Tecnologías y Mecánicas
-Este proyecto utiliza un motor narrativo personalizado sobre Next.js:
-
-- **Sistema de Chat Interactivo**: Ya no es solo leer. Elige tus respuestas para desbloquear pistas o perder fuentes.
-- **Narrativa Procedimental**: Los nombres de empresas, sospechosos y montos varían (e.g. `{CULPABLE}`, `{MONTO}`) haciendo cada investigación única.
-- **Validación Lógica**: El juego entiende si la evidencia que presentas (texto seleccionado) realmente responde a las preguntas del editor, usando coincidencia flexible (Levenshtein).
+### Sistema de Progresión
+Tu carrera avanza con cada éxito:
+1.  **Pasante (0 XP)**: Tu punto de partida.
+2.  **Reportero Junior (100 XP)**: Has demostrado que puedes encontrar una historia.
+3.  **Investigador Senior (300 XP)**: Manejas fuentes complejas y datos duros.
+4.  **Editor Jefe (600 XP)**: Tienes el control total de la narrativa.
+5.  **Leyenda del Periodismo (1000+ XP)**: Tu nombre es sinónimo de verdad.
 
 ---
 
-## 🚀 Instalación y Ejecución
+## 📁 Archivos del Caso (Escenarios)
 
-Sigue estos pasos para levantar el proyecto en tu entorno local:
+El juego presenta escenarios inspirados en hechos reales, adaptados con narrativa procedimental. Los nombres, montos y lugares específicos cambian en cada partida (RNG), asegurando que nunca resuelvas el mismo misterio dos veces.
 
-1.  **Clonar el repositorio** (si aún no lo tienes):
-    ```bash
-    git clone <url-del-repo>
-    cd game
-    ```
+1.  **Caso Juliana (Tutorial)**
+    *   *Desaparición / Femicidio*: Una joven desaparece tras un servicio religioso. ¿Fuga voluntaria o crimen oculto?
+    *   **Objetivo**: Aprender las mecánicas básicas de recolección de evidencia y empatía con fuentes.
 
-2.  **Instalar dependencias**:
-    ```bash
-    npm install
-    # o si usas yarn/pnpm/bun
-    yarn install / pnpm install / bun install
-    ```
+2.  **Caso PROGEN (Crisis Energética)**
+    *   *Corrupción Pública*: Motores eléctricos comprados como nuevos resultan ser chatarra vieja.
+    *   **Objetivo**: Conectar al Ministro de Energía con la empresa fantasma proveedora.
 
-3.  **Iniciar el servidor de desarrollo**:
-    ```bash
-    npm run dev
-    ```
+3.  **Caso Sinohydro (Ina Papers)**
+    *   *Lavado de Activos / Sobornos*: Una hidroeléctrica gigante y cuentas secretas en paraísos fiscales.
+    *   **Objetivo**: Seguir la ruta del dinero a través de empresas offshore.
 
-4.  **Jugar**:
-    Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
+4.  **Los 4 de Las Malvinas**
+    *   *Crimen de Estado / DDHH*: Cuatro jóvenes detenidos por una unidad de élite nunca llegaron a la estación de policía.
+    *   **Objetivo**: Romper el pacto de silencio institucional.
 
 ---
 
-## 📂 Estructura del Proyecto
+## 🛠️ Especificaciones Técnicas
 
-- `src/app`: Rutas y layouts de Next.js.
-- `src/components/game`: Vistas de UI (Phone, Computer, Hub).
-- `src/data/cases.ts`: **Base de datos de casos**. Aquí se definen los templates, variables y guiones de diálogo.
-- `src/lib/gameEngine.ts`: Lógica de generación de casos y sustitución de variables.
-- `src/store/gameStore.ts`: Estado global (Zustand).
+Este proyecto es una **Simulación de UI (User Interface)** construida con tecnologías web modernas. No utiliza un motor de videojuegos tradicional, sino que emula un sistema operativo dentro del navegador.
+
+### Stack Tecnológico
+- **Framework**: [Next.js 14](https://nextjs.org/) (React)
+- **Lenguaje**: TypeScript
+- **Estilos**: Tailwind CSS (para la composición rápida de UI compleja)
+- **Animaciones**: Framer Motion (transiciones de ventanas y efectos de interfaz)
+- **Estado Global**: Zustand (Manejo de inventario, progreso y chats)
+- **Lógica de Juego**: Sistema propio de *templates* y *triggers* para la narrativa procedimental.
+
+### Arquitectura
+- `/src/data/cases.ts`: El "cerebro" narrativo. Contiene todos los guiones, variables y lógica de solución en una estructura JSON tipada.
+- `/src/lib/gameEngine.ts`: El motor que procesa los templates, sustituye variables (e.g., `{CULPABLE}` -> "Carlos Pérez") e inicializa el estado de cada caso.
+- `/src/components/game`: Componentes modulares que actúan como "aplicaciones" dentro del juego (`SearchApp`, `ChatApp`, `EditorApp`).
 
 ---
 
-_Creado con ❤️ por el equipo de desarrollo de The Editor._
+## 🚀 Instalación y Desarrollo
+
+### Requisitos
+- Node.js 18+
+- npm / yarn / pnpm
+
+### Pasos
+1.  **Clonar**: `git clone <repo-url>`
+2.  **Instalar**: `npm install`
+3.  **Ejecutar**: `npm run dev`
+4.  **Abrir**: Visita `http://localhost:3000`
+
+---
+
+## � Licencia
+Este proyecto es un prototipo educativo/narrativo.
+&copy; 2025 The Editor Team.
