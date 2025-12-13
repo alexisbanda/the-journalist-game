@@ -6,11 +6,22 @@ import { ActiveCaseState } from '@/types/game';
 interface NewspaperViewProps {
     activeCase: ActiveCaseState;
     selections: { [key: string]: string };
+    score: number;
+    badge: string;
     onClose: () => void;
 }
 
-export default function NewspaperView({ activeCase, selections, onClose }: NewspaperViewProps) {
+export default function NewspaperView({ activeCase, selections, score, badge, onClose }: NewspaperViewProps) {
     const date = new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    // Determine badge color/style
+    const getBadgeStyle = () => {
+        if (score >= 100) return "border-blue-800 text-blue-800 rotate-0";
+        if (score >= 80) return "border-green-800 text-green-800 -rotate-2";
+        if (score >= 50) return "border-yellow-600 text-yellow-600 rotate-2";
+        if (score >= 20) return "border-orange-600 text-orange-600 -rotate-1";
+        return "border-red-600 text-red-600 rotate-12";
+    };
 
     // Helper to format body text
     const getBodyText = () => {
@@ -31,9 +42,23 @@ export default function NewspaperView({ activeCase, selections, onClose }: Newsp
         <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-8"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 md:p-8"
         >
             <div className="bg-[#f0e6d2] text-black w-full max-w-4xl h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col items-center p-8 border-r-4 border-b-4 border-gray-400">
+
+                {/* Accuracy Stamp */}
+                <motion.div
+                    initial={{ scale: 2, opacity: 0, rotate: 45 }}
+                    animate={{ scale: 1, opacity: 0.9, rotate: getBadgeStyle().includes('rotate-12') ? 12 : -6 }}
+                    transition={{ delay: 0.5, type: 'spring' }}
+                    className={`absolute top-20 right-10 z-20 border-[8px] border-double px-4 py-2 font-black uppercase text-2xl md:text-4xl tracking-widest opacity-80 mix-blend-multiply ${getBadgeStyle()}`}
+                >
+                    {badge}
+                    <div className="text-center text-sm font-sans font-bold border-t-2 border-current mt-1 pt-1 opacity-80">
+                        VERACIDAD: {score}%
+                    </div>
+                </motion.div>
+
                 {/* Header */}
                 <div className="w-full border-b-4 border-black mb-4 pb-2 text-center">
                     <h1 className="font-serif text-6xl font-black uppercase tracking-tighter mb-2">La Crónica Matutina</h1>
@@ -52,7 +77,7 @@ export default function NewspaperView({ activeCase, selections, onClose }: Newsp
                 </div>
 
                 {/* Content Layout */}
-                <div className="flex gap-8 w-full">
+                <div className="flex flex-col md:flex-row gap-8 w-full">
                     {/* Main Column */}
                     <div className="flex-1">
                         {/* Placeholder Image */}
@@ -61,14 +86,14 @@ export default function NewspaperView({ activeCase, selections, onClose }: Newsp
                         </div>
 
                         {/* Body Text */}
-                        <div className="font-serif text-lg leading-relaxed text-justify whitespace-pre-line columns-2 gap-8">
+                        <div className="font-serif text-lg leading-relaxed text-justify whitespace-pre-line columns-1 md:columns-2 gap-8">
                             <span className="float-left text-5xl font-black mr-2 mt-[-6px]">T</span>
                             {getBodyText()}
                         </div>
                     </div>
 
                     {/* Side Column */}
-                    <div className="w-1/4 border-l-2 border-black pl-4 flex flex-col gap-4">
+                    <div className="w-full md:w-1/4 md:border-l-2 md:border-black md:pl-4 flex flex-col gap-4">
                         <div className="bg-black text-white p-2 font-bold text-center uppercase">Edición Tardía</div>
                         <p className="font-serif text-sm">Usa la aplicación Navegador para encontrar más pistas.</p>
                         <hr className="border-black my-4" />

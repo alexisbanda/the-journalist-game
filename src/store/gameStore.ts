@@ -1,6 +1,15 @@
 import { create } from 'zustand';
 import { ActiveCaseState, InventoryItem, ViewState } from '@/types/game';
 import { replaceVariables } from '@/lib/gameEngine';
+import { CASES } from '@/data/cases';
+
+interface PlayerStats {
+    totalScore: number;
+    casesSolved: number;
+    averageAccuracy: number;
+    currentTitle: string;
+}
+
 
 
 interface GameState {
@@ -9,6 +18,9 @@ interface GameState {
     inventory: InventoryItem[];
     gameTime: Date;
     gameMode: 'novice' | 'expert';
+    maxUnlockedCaseIndex: number; // 0 = Only first case (tutorial), 1 = First two, etc.
+    playerStats: PlayerStats;
+
 
     // Tutorial Flags
     tutorialFlags: {
@@ -20,9 +32,12 @@ interface GameState {
     setView: (view: ViewState) => void;
     setActiveCase: (caseState: ActiveCaseState) => void;
     clearActiveCase: () => void;
+    returnToHub: () => void;
     addToInventory: (item: InventoryItem) => void;
     setTutorialFlag: (flag: 'hasSeenEvidenceTutorial' | 'hasSeenEditorTutorial') => void;
     setGameMode: (mode: 'novice' | 'expert') => void;
+    completeCase: (caseId: string, score: number) => void;
+
 
     // Gameplay Actions
     addMessageToThread: (threadId: string, message: any) => void;
@@ -40,6 +55,14 @@ export const useGameStore = create<GameState>((set) => ({
     inventory: [],
     gameTime: new Date(),
     gameMode: 'novice', // Default to Novice
+    maxUnlockedCaseIndex: 0,
+    playerStats: {
+        totalScore: 0,
+        casesSolved: 0,
+        averageAccuracy: 0,
+        currentTitle: 'Pasante'
+    },
+
 
     tutorialFlags: {
         hasSeenEvidenceTutorial: false,
@@ -49,6 +72,7 @@ export const useGameStore = create<GameState>((set) => ({
     setView: (view) => set({ currentView: view }),
     setActiveCase: (caseState) => set({ activeCase: caseState }),
     clearActiveCase: () => set({ activeCase: null }),
+    returnToHub: () => set({ activeCase: null, currentView: 'hub' }),
     addToInventory: (item) => set((state) => ({
         inventory: [...state.inventory, item]
     })),
@@ -56,6 +80,38 @@ export const useGameStore = create<GameState>((set) => ({
         tutorialFlags: { ...state.tutorialFlags, [flag]: true }
     })),
     setGameMode: (mode) => set({ gameMode: mode }),
+
+    completeCase: (caseId, score) => set((state) => {
+        // Update Stats
+        const newCasesSolved = state.playerStats.casesSolved + 1;
+        const newTotalScore = state.playerStats.totalScore + score;
+        const newAverage = Math.round(((state.playerStats.averageAccuracy * state.playerStats.casesSolved) + score) / newCasesSolved);
+
+        let newTitle = 'Pasante';
+        if (newTotalScore >= 1000) newTitle = 'Leyenda del Periodismo';
+        else if (newTotalScore >= 600) newTitle = 'Editor Jefe';
+        else if (newTotalScore >= 300) newTitle = 'Investigador Senior';
+        else if (newTotalScore >= 100) newTitle = 'Reportero Junior';
+
+        const updatedStats = {
+            totalScore: newTotalScore,
+            casesSolved: newCasesSolved,
+            averageAccuracy: newAverage,
+            currentTitle: newTitle
+        };
+
+        const caseIndex = CASES.findIndex(c => c.id === caseId);
+        let nextIndex = state.maxUnlockedCaseIndex;
+        if (caseIndex !== -1 && caseIndex === state.maxUnlockedCaseIndex) {
+            // Unlock next case if this was the latest one
+            nextIndex = Math.min(state.maxUnlockedCaseIndex + 1, CASES.length - 1);
+        }
+
+        return {
+            maxUnlockedCaseIndex: nextIndex,
+            playerStats: updatedStats
+        };
+    }),
 
     chooseOption: (threadId, option) => set((state) => {
         if (!state.activeCase) return state;

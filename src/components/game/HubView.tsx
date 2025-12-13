@@ -15,8 +15,12 @@ export default function HubView() {
     const clearActiveCase = useGameStore((state) => state.clearActiveCase);
     const gameMode = useGameStore((state) => state.gameMode);
     const setGameMode = useGameStore((state) => state.setGameMode);
+    const maxUnlockedCaseIndex = useGameStore((state) => state.maxUnlockedCaseIndex);
+    const playerStats = useGameStore((state) => state.playerStats);
 
-    const handleStartCase = (template: any) => {
+
+    const handleStartCase = (template: any, isLocked: boolean) => {
+        if (isLocked) return;
         setActiveCase(generateCase(template));
     };
 
@@ -38,8 +42,8 @@ export default function HubView() {
                         <button
                             onClick={() => setGameMode('novice')}
                             className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-all ${gameMode === 'novice'
-                                    ? 'bg-yellow-500 text-black border-yellow-500 font-bold shadow-[0_0_15px_rgba(234,179,8,0.5)]'
-                                    : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
+                                ? 'bg-yellow-500 text-black border-yellow-500 font-bold shadow-[0_0_15px_rgba(234,179,8,0.5)]'
+                                : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
                                 }`}
                         >
                             Periodista Novato
@@ -47,8 +51,8 @@ export default function HubView() {
                         <button
                             onClick={() => setGameMode('expert')}
                             className={`px-4 py-2 font-mono text-xs uppercase tracking-widest border transition-all ${gameMode === 'expert'
-                                    ? 'bg-red-900 text-white border-red-800 font-bold shadow-[0_0_15px_rgba(127,29,29,0.5)]'
-                                    : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
+                                ? 'bg-red-900 text-white border-red-800 font-bold shadow-[0_0_15px_rgba(127,29,29,0.5)]'
+                                : 'bg-transparent text-gray-500 border-gray-700 hover:border-gray-500'
                                 }`}
                         >
                             Periodista Experto
@@ -56,51 +60,100 @@ export default function HubView() {
                     </div>
                 </div>
 
+                {/* Top Bar with Profile */}
+                <div className="absolute top-0 left-0 w-full p-4 flex justify-between items-start z-50 pointer-events-none">
+                    {/* Profile Card (Credencial) */}
+                    <div className="pointer-events-auto bg-[#eaddcf] text-black w-64 rounded shadow-xl transform rotate-2 border border-black/20 overflow-hidden font-sans">
+                        <div className="bg-black text-white px-3 py-1 text-[10px] font-bold tracking-widest uppercase flex justify-between">
+                            <span>PRENSA</span>
+                            <span>NEXUS NEWS</span>
+                        </div>
+                        <div className="p-3 flex gap-3 items-center">
+                            <div className="w-12 h-16 bg-gray-300 border border-black/50 grayscale flex items-center justify-center overflow-hidden">
+                                {/* Placeholder Photo */}
+                                <div className="w-full h-full bg-gradient-to-b from-gray-400 to-gray-600 relative">
+                                    <div className="absolute bottom-0 w-full h-2/3 bg-black/50 rounded-t-full" />
+                                </div>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="font-bold text-sm uppercase leading-none mb-1">Investigador</h3>
+                                <div className="text-[10px] uppercase font-mono text-gray-600 truncate border-b border-black/20 pb-1 mb-1">
+                                    {playerStats.currentTitle}
+                                </div>
+                                <div className="grid grid-cols-2 gap-x-2 gap-y-0 text-[9px] font-mono leading-tight text-gray-700">
+                                    <span>CASOS: {playerStats.casesSolved}</span>
+                                    <span>REP: {playerStats.totalScore}</span>
+                                    <span className="col-span-2">PRECISIÓN: {playerStats.averageAccuracy}%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl z-10">
-                    {CASES.map((template, idx) => (
-                        <motion.button
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: idx * 0.1 }}
-                            key={template.id}
-                            onClick={() => handleStartCase(template)}
-                            className={`group relative h-64 bg-noir-paper text-black p-6 shadow-xl transform transition-all duration-300 hover:-translate-y-4 hover:rotate-1 rotate-0 border-t-2 ${template.id === 'case_juliana_01' ? 'scale-105 border-yellow-400 ring-4 ring-yellow-400/20 z-20' : 'border-white/20'}`}
-                            style={{ clipPath: 'polygon(0 0, 40% 0, 45% 10%, 100% 10%, 100% 100%, 0 100%)' }} // Folder tab shape
-                        >
-                            {/* Folder Tab Label */}
-                            <div className="absolute top-2 left-4 text-xs font-bold uppercase opacity-50">CONFIDENCIAL</div>
+                    {CASES.map((template, idx) => {
+                        const isLocked = idx > maxUnlockedCaseIndex;
+                        return (
+                            <motion.button
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: isLocked ? 0.5 : 1 }}
+                                transition={{ delay: idx * 0.1 }}
+                                key={template.id}
+                                onClick={() => handleStartCase(template, isLocked)}
+                                disabled={isLocked}
+                                className={`group relative h-64 bg-noir-paper text-black p-6 shadow-xl transform transition-all duration-300 border-t-2 
+                                ${isLocked ? 'grayscale cursor-not-allowed border-gray-600' : 'hover:-translate-y-4 hover:rotate-1 rotate-0'}
+                                ${template.id === 'case_juliana_01' && !isLocked ? 'scale-105 border-yellow-400 ring-4 ring-yellow-400/20 z-20' : ''}
+                                ${!isLocked && template.id !== 'case_juliana_01' ? 'border-white/20' : ''}
+                            `}
+                                style={{ clipPath: 'polygon(0 0, 40% 0, 45% 10%, 100% 10%, 100% 100%, 0 100%)' }} // Folder tab shape
+                            >
+                                {/* Locked Overlay */}
+                                {isLocked && (
+                                    <div className="absolute inset-0 flex items-center justify-center z-30 bg-black/10">
+                                        <div className="bg-black text-white px-2 py-1 font-mono text-xs uppercase tracking-widest border border-white/50">
+                                            BLOQUEADO
+                                        </div>
+                                    </div>
+                                )}
+                                {/* Folder Tab Label */}
+                                <div className="absolute top-2 left-4 text-xs font-bold uppercase opacity-50">CONFIDENCIAL</div>
 
-                            {/* Tutorial Badge */}
-                            {template.id === 'case_juliana_01' && (
-                                <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-20 shadow-lg animate-pulse">
-                                    Tutorial / Iniciar Aquí
+                                {/* Tutorial Badge */}
+                                {template.id === 'case_juliana_01' && (
+                                    <div className="absolute top-0 right-0 bg-yellow-400 text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest z-20 shadow-lg animate-pulse">
+                                        Tutorial / Iniciar Aquí
+                                    </div>
+                                )}
+
+                                {/* Case Content */}
+                                <div className={`mt-8 space-y-4 border-l-2 pl-4 ${template.id === 'case_juliana_01' ? 'border-yellow-400' : 'border-red-900/20'}`}>
+                                    <span className="block text-xs font-mono text-gray-600 mb-1">EXPEDIENTE #00{idx + 1}</span>
+                                    <h3 className={`text-2xl font-bold font-serif group-hover:text-red-900 transition-colors uppercase leading-tight ${template.id === 'case_juliana_01' ? 'text-black drop-shadow-md' : 'text-black'}`}>
+                                        {template.id.split('_').slice(1).join(' ')}
+                                    </h3>
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-2 h-2 rounded-full ${template.difficulty === 'hard' ? 'bg-red-600' : 'bg-green-600'}`} />
+                                        <p className="text-xs font-bold uppercase tracking-wider">
+                                            {template.difficulty === 'hard' ? 'DIFÍCIL' : template.difficulty === 'medium' ? 'MEDIO' : 'FÁCIL'}
+                                        </p>
+                                    </div>
                                 </div>
-                            )}
 
-                            {/* Case Content */}
-                            <div className={`mt-8 space-y-4 border-l-2 pl-4 ${template.id === 'case_juliana_01' ? 'border-yellow-400' : 'border-red-900/20'}`}>
-                                <span className="block text-xs font-mono text-gray-600 mb-1">EXPEDIENTE #00{idx + 1}</span>
-                                <h3 className={`text-2xl font-bold font-serif group-hover:text-red-900 transition-colors uppercase leading-tight ${template.id === 'case_juliana_01' ? 'text-black drop-shadow-md' : 'text-black'}`}>
-                                    {template.id.split('_').slice(1).join(' ')}
-                                </h3>
-                                <div className="flex items-center gap-2">
-                                    <div className={`w-2 h-2 rounded-full ${template.difficulty === 'hard' ? 'bg-red-600' : 'bg-green-600'}`} />
-                                    <p className="text-xs font-bold uppercase tracking-wider">
-                                        {template.difficulty === 'hard' ? 'DIFÍCIL' : template.difficulty === 'medium' ? 'MEDIO' : 'FÁCIL'}
-                                    </p>
+                                {/* Stamp */}
+                                <div className="absolute bottom-4 right-4 border-4 border-red-800 text-red-800 font-bold px-2 py-1 -rotate-12 opacity-0 group-hover:opacity-80 transition-opacity text-sm uppercase">
+                                    INVESTIGAR
                                 </div>
-                            </div>
-
-                            {/* Stamp */}
-                            <div className="absolute bottom-4 right-4 border-4 border-red-800 text-red-800 font-bold px-2 py-1 -rotate-12 opacity-0 group-hover:opacity-80 transition-opacity text-sm uppercase">
-                                INVESTIGAR
-                            </div>
-                        </motion.button>
-                    ))}
+                                <div className="absolute bottom-4 right-4 border-4 border-red-800 text-red-800 font-bold px-2 py-1 -rotate-12 opacity-0 group-hover:opacity-80 transition-opacity text-sm uppercase">
+                                    INVESTIGAR
+                                </div>
+                            </motion.button>
+                        )
+                    })}
                 </div>
 
                 <p className="absolute bottom-8 right-8 text-xs text-gray-700 font-mono">Build v2.1.0 // NEXUS_OS_LISTO</p>
-            </div>
+            </div >
         )
     }
 
@@ -118,13 +171,16 @@ export default function HubView() {
             {/* Vignette & Noise */}
             <div className="absolute inset-0 vignette pointer-events-none z-10" />
 
-            {/* Reset / Quit Button - Moved to Top Right outside container */}
-            <button
-                onClick={clearActiveCase}
-                className="absolute top-8 right-8 z-50 px-6 py-2 border border-noir-red/30 text-noir-red text-sm tracking-widest hover:bg-noir-red/10 hover:border-noir-red transition-all font-mono uppercase"
-            >
-                Abandonar Caso
-            </button>
+            {/* Top Bar with Profile and Reset */}
+            <div className="absolute top-0 left-0 w-full p-4 flex justify-end items-start z-50 pointer-events-none">
+                {/* Quit Button */}
+                <button
+                    onClick={clearActiveCase}
+                    className="pointer-events-auto px-6 py-2 border border-noir-red/30 text-noir-red text-sm tracking-widest hover:bg-noir-red/10 hover:border-noir-red transition-all font-mono uppercase bg-black/50 backdrop-blur"
+                >
+                    Abandonar Caso
+                </button>
+            </div>
 
             <div className="relative z-20 text-center space-y-12 w-full max-w-5xl">
                 <div className="flex flex-col items-center justify-center gap-2">

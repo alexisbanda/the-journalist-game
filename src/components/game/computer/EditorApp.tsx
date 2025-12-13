@@ -56,8 +56,12 @@ const checkMatch = (selection: string, answer: string) => {
 export default function EditorApp() {
     const activeCase = useGameStore((state) => state.activeCase);
     const clearActiveCase = useGameStore((state) => state.clearActiveCase);
+    const setView = useGameStore((state) => state.setView);
+    const returnToHub = useGameStore((state) => state.returnToHub);
+    const completeCase = useGameStore((state) => state.completeCase);
     const [selections, setSelections] = useState<{ [key: string]: string }>({});
     const [status, setStatus] = useState<'editing' | 'validating' | 'success' | 'failure'>('editing');
+    const [result, setResult] = useState<{ score: number; badge: string }>({ score: 0, badge: '' });
 
     if (!activeCase) return null;
 
@@ -66,9 +70,10 @@ export default function EditorApp() {
             <NewspaperView
                 activeCase={activeCase}
                 selections={selections}
+                score={result.score} // Pass score
+                badge={result.badge} // Pass badge
                 onClose={() => {
-                    clearActiveCase();
-                    // Maybe route to Hub or just close
+                    returnToHub();
                 }}
             />
         );
@@ -200,12 +205,33 @@ export default function EditorApp() {
                             setStatus('validating');
 
                             setTimeout(() => {
-                                const isWin = questions.every(q => {
+                                // Calculate matches
+                                let correctCount = 0;
+                                questions.forEach(q => {
                                     const sel = selections[q] || "";
                                     const ans = activeCase.solution[q] || "";
-                                    return checkMatch(sel, ans);
+                                    if (checkMatch(sel, ans)) correctCount++;
                                 });
-                                setStatus(isWin ? 'success' : 'failure');
+
+                                // Calculate Score (0-100)
+                                const total = questions.length;
+                                const score = total === 0 ? 0 : Math.round((correctCount / total) * 100);
+
+                                // Determine Badge
+                                let badge = "Fake News"; // Default < 20
+                                if (score >= 100) badge = "Periodismo de Excelencia";
+                                else if (score >= 80) badge = "Periodismo Riguroso";
+                                else if (score >= 50) badge = "Sensacionalista";
+                                else if (score >= 20) badge = "Amarillista";
+
+                                setResult({ score, badge });
+                                setStatus('success'); // Always succeed now, just with different grades
+
+                                // Unlock next case regardless of score (gameplay choice: allow failing forward)
+                                // OR maybe strictly require > 0? For now allow all.
+                                if (activeCase) {
+                                    completeCase(activeCase.templateId, score);
+                                }
                             }, 2000);
                         }}
                         disabled={status === 'validating'}
